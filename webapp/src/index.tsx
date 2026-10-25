@@ -193,6 +193,7 @@ export default class Plugin {
         const productID = process.env.TARGET_IS_PRODUCT ? 'boards' : manifest.id
 
         // register websocket handlers
+        this.registry?.registerWebSocketEventHandler(`custom_${productID}_${ACTION_UPDATE_BLOCK}`, (e) => wsClient.updateHandler(e.data))
         this.registry?.registerWebSocketEventHandler(`custom_${productID}_${ACTION_UPDATE_BOARD}`, (e: any) => wsClient.updateHandler(e.data))
         this.registry?.registerWebSocketEventHandler(`custom_${productID}_${ACTION_UPDATE_CATEGORY}`, (e: any) => wsClient.updateHandler(e.data))
         this.registry?.registerWebSocketEventHandler(`custom_${productID}_${ACTION_UPDATE_BOARD_CATEGORY}`, (e: any) => wsClient.updateHandler(e.data))

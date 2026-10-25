@@ -35,3 +35,5 @@ Column-property saves apply the successful REST response to the local store, inc
 Enter/Escape suppresses the corresponding blur save until that blur event is consumed. This also covers WebKit deferred blur delivery and avoids a duplicate title-save request during the next navigation.
 
 Card title saves also deduplicate an acknowledged/in-flight title across Enter, blur and dialog cleanup. Failed saves clear the marker and rethrow, allowing a later retry without hiding the error.
+
+Register the missing UPDATE_BLOCK plugin WebSocket handler, matching its existing import and unregistration. Card property/title changes and collaborator edits now update the open view without a reload.
