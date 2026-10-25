@@ -3,6 +3,8 @@
 
 import React, {useEffect, useState, useContext, CSSProperties, useRef} from 'react'
 
+import TouchMenuPortal from '../touchMenuPortal'
+
 import CompassIcon from '../../widgets/icons/compassIcon'
 
 import MenuUtil from './menuUtil'
@@ -67,27 +69,29 @@ function SubMenuOption(props: SubMenuOptionProps): JSX.Element {
             <div className='menu-name'>{props.name}</div>
             <CompassIcon icon='chevron-right'/>
             {isOpen &&
-                <div
-                    className={'SubMenu Menu noselect ' + (props.position || 'bottom')}
-                    style={styleRef.current}
-                >
-                    <div className='menu-contents'>
-                        <div className='menu-options'>
-                            {props.children}
-                        </div>
-                        <div className='menu-spacer hideOnWidescreen'/>
+                <TouchMenuPortal>
+                    <div
+                        className={'SubMenu Menu noselect ' + (props.position || 'bottom')}
+                        style={styleRef.current}
+                    >
+                        <div className='menu-contents'>
+                            <div className='menu-options'>
+                                {props.children}
+                            </div>
+                            <div className='menu-spacer hideOnWidescreen'/>
 
-                        <div className='menu-options hideOnWidescreen'>
-                            <Menu.Text
-                                id='menu-cancel'
-                                name={'Cancel'}
-                                className='menu-cancel'
-                                onClick={() => undefined}
-                            />
+                            <div className='menu-options hideOnWidescreen'>
+                                <Menu.Text
+                                    id='menu-cancel'
+                                    name={'Cancel'}
+                                    className='menu-cancel'
+                                    onClick={() => undefined}
+                                />
+                            </div>
                         </div>
+
                     </div>
-
-                </div>
+                </TouchMenuPortal>
             }
         </div>
     )

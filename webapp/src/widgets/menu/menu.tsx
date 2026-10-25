@@ -3,6 +3,8 @@
 
 import React, {CSSProperties} from 'react'
 
+import TouchMenuPortal from '../touchMenuPortal'
+
 import SeparatorOption from './separatorOption'
 import SwitchOption from './switchOption'
 import TextOption from './textOption'
@@ -53,35 +55,37 @@ export default class Menu extends React.PureComponent<Props> {
         }
 
         return (
-            <div
-                className={`Menu noselect ${position || 'bottom'} ${fixed ? ' fixed' : ''}`}
-                style={style}
-                ref={this.menuRef}
-            >
-                <div className='menu-contents'>
-                    <div className='menu-options'>
-                        {React.Children.map(children, (child) => (
-                            <div
-                                onMouseEnter={() => this.setState({hovering: child})}
-                            >
-                                <HoveringContext.Provider value={child === this.state.hovering}>
-                                    {child}
-                                </HoveringContext.Provider>
-                            </div>))}
-                    </div>
+            <TouchMenuPortal>
+                <div
+                    className={`Menu noselect ${position || 'bottom'} ${fixed ? ' fixed' : ''}`}
+                    style={style}
+                    ref={this.menuRef}
+                >
+                    <div className='menu-contents'>
+                        <div className='menu-options'>
+                            {React.Children.map(children, (child) => (
+                                <div
+                                    onMouseEnter={() => this.setState({hovering: child})}
+                                >
+                                    <HoveringContext.Provider value={child === this.state.hovering}>
+                                        {child}
+                                    </HoveringContext.Provider>
+                                </div>))}
+                        </div>
 
-                    <div className='menu-spacer hideOnWidescreen'/>
+                        <div className='menu-spacer hideOnWidescreen'/>
 
-                    <div className='menu-options hideOnWidescreen'>
-                        <Menu.Text
-                            id='menu-cancel'
-                            name={'Cancel'}
-                            className='menu-cancel'
-                            onClick={this.onCancel}
-                        />
+                        <div className='menu-options hideOnWidescreen'>
+                            <Menu.Text
+                                id='menu-cancel'
+                                name={'Cancel'}
+                                className='menu-cancel'
+                                onClick={this.onCancel}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </TouchMenuPortal>
         )
     }
 

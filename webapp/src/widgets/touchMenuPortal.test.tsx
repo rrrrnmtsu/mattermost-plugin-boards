@@ -1,0 +1,63 @@
+import React from 'react'
+import {render, fireEvent, screen} from '@testing-library/react'
+import MenuWrapper from './menuWrapper'
+import Menu from './menu'
+
+const media = (matches: boolean) => Object.defineProperty(window, 'matchMedia', {configurable: true, value: jest.fn(() => ({matches, addEventListener: jest.fn(), removeEventListener: jest.fn()}))})
+afterEach(() => {media(false)})
+
+test('desktop menus keep their inline DOM and close after a selected action', () => {
+    media(false)
+    const action=jest.fn()
+    const {container}=render(<MenuWrapper><button>Open</button><Menu><Menu.Text id='pick' name='Pick' onClick={action}/></Menu></MenuWrapper>)
+    fireEvent.click(screen.getByText('Open'))
+    expect(container.querySelector('.Menu')).not.toBeNull()
+    expect(document.querySelector('.boards-menu-portal')).toBeNull()
+    fireEvent.click(screen.getByText('Pick'))
+    expect(action).toHaveBeenCalledTimes(1)
+    expect(container.querySelector('.Menu')).toBeNull()
+})
+test('touch menus escape scrolling ancestors, preserve option clicks and clean up', () => {
+    media(true)
+    const action=jest.fn()
+    const {container}=render(<div style={{overflow:'auto', transform:'translateZ(0)'}}><MenuWrapper><button>Open</button><Menu><Menu.Text id='pick' name='Pick' onClick={action}/></Menu></MenuWrapper></div>)
+    fireEvent.click(screen.getByText('Open'))
+    const host=document.querySelector('.boards-menu-portal')
+    expect(host?.parentElement).toBe(document.body)
+    expect(container.querySelector('.Menu')).toBeNull()
+    fireEvent.click(screen.getByText('Pick'))
+    expect(action).toHaveBeenCalledTimes(1)
+    expect(document.querySelector('.boards-menu-portal')).toBeNull()
+})
+test('switch clicks stay open and outside clicks dismiss the touch sheet', () => {
+    media(true)
+    const action=jest.fn()
+    render(<MenuWrapper><button>Open</button><Menu><Menu.Switch id='switch' name='Status' isOn={false} suppressItemClicked={true} onClick={action}/></Menu></MenuWrapper>)
+    fireEvent.click(screen.getByText('Open'))
+    fireEvent.click(screen.getByText('Status'))
+    expect(action).toHaveBeenCalledTimes(1)
+    expect(document.querySelector('.boards-menu-portal')).not.toBeNull()
+    fireEvent.click(document.body)
+    expect(document.querySelector('.boards-menu-portal')).toBeNull()
+})
+test('nested touch menus remain owned by the same trigger and deliver one action', () => {
+    media(true)
+    const action=jest.fn()
+    render(<MenuWrapper><button>Open</button><Menu><Menu.SubMenu id='add' name='Add'><Menu.Text id='child' name='Child' onClick={action}/></Menu.SubMenu></Menu></MenuWrapper>)
+    fireEvent.click(screen.getByText('Open'))
+    fireEvent.click(screen.getByText('Add'))
+    expect(document.querySelectorAll('.boards-menu-portal')).toHaveLength(2)
+    fireEvent.click(screen.getByText('Child'))
+    expect(action).toHaveBeenCalledTimes(1)
+    expect(document.querySelector('.boards-menu-portal')).toBeNull()
+})
+test('escape dismisses and unmount removes all body-level hosts', () => {
+    media(true)
+    const {unmount}=render(<MenuWrapper><button>Open</button><Menu><Menu.Text id='pick' name='Pick' onClick={jest.fn()}/></Menu></MenuWrapper>)
+    fireEvent.click(screen.getByText('Open'))
+    fireEvent.keyUp(document,{key:'Escape'})
+    expect(document.querySelector('.boards-menu-portal')).toBeNull()
+    fireEvent.click(screen.getByText('Open'))
+    unmount()
+    expect(document.querySelector('.boards-menu-portal')).toBeNull()
+})

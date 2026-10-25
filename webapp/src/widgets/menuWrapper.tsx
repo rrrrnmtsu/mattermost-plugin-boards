@@ -4,6 +4,8 @@
 
 import React, {useRef, useState, useEffect, useCallback} from 'react'
 
+import {MenuPortalContext} from './touchMenuPortal'
+
 import './menuWrapper.scss'
 
 type Props = {
@@ -18,6 +20,7 @@ type Props = {
 
 const MenuWrapper = (props: Props) => {
     const node = useRef<HTMLDivElement>(null)
+    const portalHosts = useRef(new Set<HTMLElement>())
     const [open, setOpen] = useState(Boolean(props.isOpen))
 
     if (!Array.isArray(props.children) || props.children.length !== 2) {
@@ -32,7 +35,7 @@ const MenuWrapper = (props: Props) => {
     }, [props.onToggle, open])
 
     const closeOnBlur = useCallback((e: Event) => {
-        if (e.target && node.current?.contains(e.target as Node)) {
+        if (e.target && (node.current?.contains(e.target as Node) || Array.from(portalHosts.current).some((host) => host.contains(e.target as Node)))) {
             return
         }
 
@@ -96,16 +99,18 @@ const MenuWrapper = (props: Props) => {
     }
 
     return (
-        <div
-            role='button'
-            aria-label={props.label || 'menuwrapper'}
-            className={className}
-            onClick={toggle}
-            ref={node}
-        >
-            {children ? Object.values(children)[0] : null}
-            {children && !props.disabled && open ? Object.values(children)[1] : null}
-        </div>
+        <MenuPortalContext.Provider value={portalHosts.current}>
+            <div
+                role='button'
+                aria-label={props.label || 'menuwrapper'}
+                className={className}
+                onClick={toggle}
+                ref={node}
+            >
+                {children ? Object.values(children)[0] : null}
+                {children && !props.disabled && open ? Object.values(children)[1] : null}
+            </div>
+        </MenuPortalContext.Provider>
     )
 }
 

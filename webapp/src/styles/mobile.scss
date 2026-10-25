@@ -159,6 +159,25 @@ body.focalboard-body {
             padding: 12px;
             touch-action: manipulation; }
 
+        > .boards-menu-portal {
+            @include z-index(touch-menu-overlay);
+            position: fixed;
+            inset: 0;
+            pointer-events: auto;
+            overscroll-behavior: contain;
+
+            .view-list {
+                max-height: none;
+                height: auto;
+                overflow: visible;
+            }
+
+            .subMenu {
+                height: auto;
+                overflow: visible;
+            }
+        }
+
         .Menu.noselect,
         .SubMenuOption .SubMenu {
             @include z-index(touch-menu-overlay);
