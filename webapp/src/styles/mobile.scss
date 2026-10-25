@@ -285,6 +285,29 @@ body.focalboard-body {
                 align-items: center; }
         }
 
+        .cardDialog .ValueSelector {
+            min-width: 0;
+            max-width: 100%;
+
+            .ValueSelector__menu {
+                min-width: 0 !important;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .ValueSelector__menu-list {
+                max-height: min(45dvh, 320px);
+                overflow: hidden auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior: contain;
+            }
+
+            .value-menu-option {
+                min-height: 44px;
+                min-width: 0;
+            }
+        }
+
         input,
         textarea,
         [contenteditable='true'],

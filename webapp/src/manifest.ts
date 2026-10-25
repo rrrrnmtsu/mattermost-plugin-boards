@@ -14,7 +14,7 @@ const manifest = JSON.parse(`
     "homepage_url": "https://github.com/rrrrnmtsu/mattermost-plugin-boards",
     "support_url": "https://github.com/rrrrnmtsu/mattermost-plugin-boards/issues",
     "icon_path": "assets/starter-template-icon.svg",
-    "version": "9.2.8+sakura.3",
+    "version": "9.2.8+sakura.4",
     "min_server_version": "10.7.0",
     "server": {
         "executables": {
