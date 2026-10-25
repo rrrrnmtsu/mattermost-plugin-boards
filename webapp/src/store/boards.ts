@@ -139,6 +139,10 @@ const boardsSlice = createSlice({
         },
         updateBoards: (state, action: PayloadAction<Board[]>) => {
             for (const board of action.payload) {
+                const previous = state.boards[board.id] || state.templates[board.id]
+                if (previous && previous.updateAt > board.updateAt) {
+                    continue
+                }
                 // Normalize cardProperties: the Go nil slice serialises as JSON null,
                 // so coerce to [] here so selectors can always assume an array.
                 const normalized = {...board, cardProperties: board.cardProperties ?? []}

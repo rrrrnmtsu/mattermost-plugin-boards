@@ -7,6 +7,8 @@ import {TestBlockFactory} from './test/testBlockFactory'
 import 'isomorphic-fetch'
 import {FetchMock} from './test/fetchMock'
 import {mockDOM} from './testUtils'
+import store from './store'
+import {updateBoards} from './store/boards'
 
 global.fetch = FetchMock.fn
 
@@ -19,6 +21,24 @@ beforeAll(() => {
 })
 
 describe('Mutator', () => {
+    test('shows saved column properties without waiting for a WebSocket event', async () => {
+        const board = TestBlockFactory.createBoard()
+        const oldProperties = board.cardProperties
+        const properties = [{id: 'status', name: 'Status', type: 'select' as const, options: [{id: 'new-option', value: 'In progress', color: 'propColorDefault'}]}]
+        const saved = {...board, cardProperties: properties, updateAt: board.updateAt + 1}
+        FetchMock.fn.mockReturnValueOnce(FetchMock.jsonResponse(JSON.stringify(saved)))
+        await mutator.updateBoardCardProperties(board.id, oldProperties, properties)
+        expect(store.getState().boards.boards[board.id].cardProperties).toEqual(properties)
+        store.dispatch(updateBoards([{...board, updateAt: board.updateAt - 1}]))
+        expect(store.getState().boards.boards[board.id].cardProperties).toEqual(properties)
+    })
+    test.each([403, 200])('does not apply failed or mismatched board responses (HTTP %s)', async (status) => {
+        const board = TestBlockFactory.createBoard()
+        store.dispatch(updateBoards([board]))
+        FetchMock.fn.mockResolvedValueOnce(new Response(JSON.stringify({id: 'another-board'}), {status}))
+        await expect(mutator.updateBoardCardProperties(board.id, board.cardProperties, board.cardProperties)).rejects.toThrow()
+        expect(store.getState().boards.boards[board.id].cardProperties).toEqual(board.cardProperties)
+    })
     test('changePropertyValue', async () => {
         const board = TestBlockFactory.createBoard()
         const card = TestBlockFactory.createCard()

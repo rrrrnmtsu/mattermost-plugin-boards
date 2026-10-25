@@ -8,7 +8,7 @@ import cloneDeep from 'lodash/cloneDeep'
 
 import {BlockIcons} from './blockIcons'
 import {Block, BlockPatch, createPatchesFromBlocks} from './blocks/block'
-import {Board, BoardMember, BoardsAndBlocks, IPropertyOption, IPropertyTemplate, PropertyTypeEnum, createBoard, createPatchesFromBoards, createPatchesFromBoardsAndBlocks, createCardPropertiesPatches} from './blocks/board'
+import {Board, BoardPatch, BoardMember, BoardsAndBlocks, IPropertyOption, IPropertyTemplate, PropertyTypeEnum, createBoard, createPatchesFromBoards, createPatchesFromBoardsAndBlocks, createCardPropertiesPatches} from './blocks/board'
 import {BoardView, ISortOption, createBoardView, KanbanCalculationFields} from './blocks/boardView'
 import {Card, createCard} from './blocks/card'
 import {ContentBlock} from './blocks/contentBlock'
@@ -568,14 +568,26 @@ class Mutator {
 
     // Properties
 
+    private async patchBoardPropertiesAndSync(boardId: string, patch: BoardPatch): Promise<void> {
+        const response = await octoClient.patchBoard(boardId, patch)
+        if (!response.ok) {
+            throw new Error(`Unable to save board properties (HTTP ${response.status})`)
+        }
+        const saved = await response.json() as Board
+        if (saved.id !== boardId) {
+            throw new Error('Saved board identity does not match the requested board')
+        }
+        store.dispatch(updateBoards([saved]))
+    }
+
     async updateBoardCardProperties(boardId: string, oldProperties: IPropertyTemplate[], newProperties: IPropertyTemplate[], description = 'update card properties') {
         const [updatePatch, undoPatch] = createCardPropertiesPatches(newProperties, oldProperties)
         await undoManager.perform(
             async () => {
-                await octoClient.patchBoard(boardId, updatePatch)
+                await this.patchBoardPropertiesAndSync(boardId, updatePatch)
             },
             async () => {
-                await octoClient.patchBoard(boardId, undoPatch)
+                await this.patchBoardPropertiesAndSync(boardId, undoPatch)
             },
             description,
             this.undoGroupId,
