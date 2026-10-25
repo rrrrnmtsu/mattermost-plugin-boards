@@ -233,6 +233,31 @@ describe('components/boardTemplateSelector/boardTemplateSelector', () => {
             userEvent.click(divNewTemplate!)
             expect(mockedMutator.addEmptyBoardTemplate).toBeCalledTimes(1)
         })
+        test('waits for channel linking before exposing the new board and preserves redo navigation', async () => {
+            const newBoard = createBoard({id: 'new-linked-board'} as Board)
+            const onClose = jest.fn()
+            let releaseLink: () => void = () => undefined
+            let afterRedo: ((id: string) => Promise<void>) | undefined
+            const linked = new Promise<void>((resolve) => { releaseLink = resolve })
+            mockedMutator.addEmptyBoard.mockImplementationOnce(async (_team, _intl, callback) => {
+                afterRedo = callback
+                await callback?.(newBoard.id)
+                return {boards: [newBoard], blocks: []}
+            })
+            mockedMutator.updateBoard.mockReturnValueOnce(linked)
+            render(wrapDNDIntl(
+                <ReduxProvider store={store}>
+                    <BoardTemplateSelector channelId='private-channel' onClose={onClose}/>
+                </ReduxProvider>,
+            ), {wrapper: MemoryRouter})
+            userEvent.click(screen.getByText('Create empty board').parentElement!)
+            await waitFor(() => expect(mockedMutator.updateBoard).toBeCalled())
+            expect(onClose).not.toBeCalled()
+            await act(async () => { releaseLink(); await linked })
+            await waitFor(() => expect(onClose).toBeCalledTimes(1))
+            await act(async () => { await afterRedo?.(newBoard.id) })
+            expect(onClose).toBeCalledTimes(2)
+        })
         test('return BoardTemplateSelector and click empty board', async () => {
             const newBoard = createBoard({id: 'new-board'} as Board)
             mockedMutator.addEmptyBoard.mockResolvedValue({boards: [newBoard], blocks: []})

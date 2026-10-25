@@ -27,3 +27,5 @@ Editable card/board titles ignore Enter/Escape while Japanese IME composition is
 The chat navigation is rendered after the existing version/mobile notices, preserving the original banner stacking and keeping the return link clickable.
 
 A localized Boards main-menu action opens the current team with a native same-origin navigation, so touch users do not need to type a URL or find the desktop app bar. It is unregistered with the plugin.
+
+New empty/template boards are revealed after the channel-link save completes, preventing immediate title edits from racing that save. Subsequent undo/redo navigation is preserved. A delayed-link regression test verifies this order.

@@ -32,6 +32,7 @@ import {Constants} from '../../constants'
 
 import BoardTemplateSelectorPreview from './boardTemplateSelectorPreview'
 import BoardTemplateSelectorItem from './boardTemplateSelectorItem'
+import {deferBoardNavigation} from './deferBoardNavigation'
 
 type Props = {
     title?: React.ReactNode
@@ -108,9 +109,11 @@ const BoardTemplateSelector = (props: Props) => {
             TelemetryClient.trackEvent(TelemetryCategory, TelemetryActions.CreateBoardViaTemplate, {boardTemplateId: activeTemplate.properties.trackingTemplateId as string, channelID: props.channelId})
         }
 
-        const boardsAndBlocks = await mutator.addBoardFromTemplate(currentTeam?.id || Constants.globalTeamId, intl, showBoard, () => showBoard(currentBoardId), activeTemplate.id, currentTeam?.id)
+        const navigation = deferBoardNavigation(showBoard)
+        const boardsAndBlocks = await mutator.addBoardFromTemplate(currentTeam?.id || Constants.globalTeamId, intl, navigation.afterRedo, () => showBoard(currentBoardId), activeTemplate.id, currentTeam?.id)
         const board = boardsAndBlocks.boards[0]
         await mutator.updateBoard({...board, channelId: props.channelId || ''}, board, 'linked channel')
+        await navigation.reveal(board.id)
         if (activeTemplate.title === OnboardingBoardTitle) {
             resetTour()
         }
@@ -195,9 +198,11 @@ const BoardTemplateSelector = (props: Props) => {
                                 size={'medium'}
                                 icon={<CompassIcon icon='kanban'/>}
                                 onClick={async () => {
-                                    const boardsAndBlocks = await mutator.addEmptyBoard(currentTeam?.id || '', intl, showBoard, () => showBoard(currentBoardId))
+                                    const navigation = deferBoardNavigation(showBoard)
+                                    const boardsAndBlocks = await mutator.addEmptyBoard(currentTeam?.id || '', intl, navigation.afterRedo, () => showBoard(currentBoardId))
                                     const board = boardsAndBlocks.boards[0]
                                     await mutator.updateBoard({...board, channelId: props.channelId || ''}, board, 'linked channel')
+                                    await navigation.reveal(board.id)
                                 }}
                             >
                                 <FormattedMessage
