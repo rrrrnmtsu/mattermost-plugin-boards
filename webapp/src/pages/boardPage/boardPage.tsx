@@ -362,7 +362,6 @@ const BoardPage = (props: Props): JSX.Element => {
                     <SetWindowTitleAndIcon/>
                     <UndoRedoHotKeys/>
                     <WebsocketConnection/>
-                    {Utils.isFocalboardPlugin() && <ChatReturnLink/>}
                     <VersionMessage/>
 
                     {!mobileWarningClosed &&
@@ -383,6 +382,8 @@ const BoardPage = (props: Props): JSX.Element => {
                                 className='margin-right'
                             />
                         </div>}
+
+                    {Utils.isFocalboardPlugin() && <ChatReturnLink/>}
 
                     {
 

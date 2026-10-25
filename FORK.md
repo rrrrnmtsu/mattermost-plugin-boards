@@ -23,3 +23,5 @@ Build on Linux amd64 with a supported Go and Node toolchain:
 Bundle only linux-amd64 and preserve assets, LICENSE.txt, NOTICE.txt and the generated webapp license notices. Deployment archive hashes and browser/device acceptance are recorded separately; browser emulation is not physical iPhone acceptance. The upstream mobile-beta notice is retained.
 
 Editable card/board titles ignore Enter/Escape while Japanese IME composition is active (including keyCode 229). Focused tests cover retaining focus and submitting the following Enter exactly once.
+
+The chat navigation is rendered after the existing version/mobile notices, preserving the original banner stacking and keeping the return link clickable.
