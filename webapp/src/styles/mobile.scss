@@ -30,7 +30,21 @@ body.focalboard-body {
             overflow: hidden;
         }
 
-        .product-wrapper {
+        #root.focalboard-plugin-root > .main-wrapper {
+            min-height: 0;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .Workspace,
+        .mainFrame {
+            min-height: 0;
+            min-width: 0;
+            flex: 1 1 0%;
+        }
+
+        #root.focalboard-plugin-root .product-wrapper {
+            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -72,7 +86,8 @@ body.focalboard-body {
 
                 > .add-buttons { display: none; }
 
-                > .title { padding-right: 88px;
+                > .title { padding-left: 36px;
+                    padding-right: 88px;
                     min-height: 44px;
                     align-items: center; }
 
