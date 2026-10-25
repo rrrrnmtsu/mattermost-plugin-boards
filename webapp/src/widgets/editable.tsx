@@ -97,6 +97,9 @@ export function useEditable(
         title: value,
         onBlur: () => save('onBlur'),
         onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement|HTMLInputElement>): void => {
+            if (e.nativeEvent.isComposing || e.keyCode === 229) {
+                return
+            }
             if (e.keyCode === 27 && !(e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey) { // ESC
                 e.preventDefault()
                 if (props.saveOnEsc) {
