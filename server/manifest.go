@@ -16,11 +16,10 @@ const manifestStr = `
   "id": "focalboard",
   "name": "Mattermost Boards",
   "description": "The Mattermost Boards plugin",
-  "homepage_url": "https://github.com/mattermost/mattermost-plugin-boards",
-  "support_url": "https://github.com/mattermost/mattermost-plugin-boards/issues",
-  "release_notes_url": "https://github.com/mattermost/mattermost-plugin-boards/releases",
+  "homepage_url": "https://github.com/rrrrnmtsu/mattermost-plugin-boards",
+  "support_url": "https://github.com/rrrrnmtsu/mattermost-plugin-boards/issues",
   "icon_path": "assets/starter-template-icon.svg",
-  "version": "9.2.2",
+  "version": "9.2.8-sakura.1",
   "min_server_version": "10.7.0",
   "server": {
     "executables": {

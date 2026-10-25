@@ -79,3 +79,35 @@
         height: 100%;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .ViewHeader {
+        min-width: 0;
+        flex-wrap: wrap;
+        overflow: visible;
+        gap: 8px;
+
+        > div {
+            margin-right: 0;
+        }
+
+        .octo-spacer {
+            display: none;
+        }
+
+        .viewSelector {
+            min-width: 0;
+            flex: 1 1 160px;
+
+            .Editable {
+                min-width: 0;
+            }
+        }
+    }
+
+    .board-search-field input {
+        max-width: 100%;
+        min-height: 44px;
+        font-size: 16px;
+    }
+}

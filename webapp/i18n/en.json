@@ -461,5 +461,7 @@
   "tutorial_tip.got_it": "Got it",
   "tutorial_tip.ok": "Next",
   "tutorial_tip.out": "Opt out of these tips.",
-  "tutorial_tip.seen": "Seen this before?"
+  "tutorial_tip.seen": "Seen this before?",
+    "Sakura.back-to-chat": "Back to chat",
+  "Sakura.source-code": "Source code"
 }

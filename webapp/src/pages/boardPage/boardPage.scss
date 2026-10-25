@@ -55,3 +55,31 @@
     width: 600px;
     height: 468px;
 }
+
+.BoardPage > .chatNavigation {
+    display: flex;
+    flex: 0 0 auto;
+    padding: 4px 12px;
+    border-bottom: 1px solid rgba(var(--center-channel-color-rgb), 0.16);
+
+    a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 8px;
+        color: rgb(var(--link-color-rgb));
+        touch-action: manipulation;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .BoardPage {
+        min-width: 0;
+        max-width: 100%;
+    }
+}
+
+.BoardPage > .chatNavigation .sourceLink {
+    margin-left: auto;
+    font-size: 12px;
+}

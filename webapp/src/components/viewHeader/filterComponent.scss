@@ -1,3 +1,11 @@
 .FilterComponent {
     min-width: 430px;
 }
+
+@media screen and (max-width: 768px) {
+    .FilterComponent {
+        min-width: 0;
+        width: min(430px, calc(100vw - 24px));
+        max-width: calc(100vw - 24px);
+    }
+}

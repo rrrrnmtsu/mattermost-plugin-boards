@@ -447,5 +447,7 @@
   "tutorial_tip.got_it": "了解",
   "tutorial_tip.ok": "次へ",
   "tutorial_tip.out": "これらのコツを表示しません。",
-  "tutorial_tip.seen": "以前に見たことがありますか?"
+  "tutorial_tip.seen": "以前に見たことがありますか?",
+    "Sakura.back-to-chat": "チャットへ戻る",
+  "Sakura.source-code": "ソースコード"
 }

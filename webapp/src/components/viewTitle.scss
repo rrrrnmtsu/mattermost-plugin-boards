@@ -56,3 +56,16 @@
         flex-grow: 1;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .ViewTitle > div {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .ViewTitle .Editable {
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+    }
+}

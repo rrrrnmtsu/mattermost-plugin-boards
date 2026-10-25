@@ -6,6 +6,7 @@ import {batch} from 'react-redux'
 import {FormattedMessage, useIntl} from 'react-intl'
 import {useRouteMatch, useHistory} from 'react-router-dom'
 
+import ChatReturnLink from '../../components/chatReturnLink'
 import Workspace from '../../components/workspace'
 import VersionMessage from '../../components/messages/versionMessage'
 import octoClient from '../../octoClient'
@@ -361,6 +362,7 @@ const BoardPage = (props: Props): JSX.Element => {
                     <SetWindowTitleAndIcon/>
                     <UndoRedoHotKeys/>
                     <WebsocketConnection/>
+                    {Utils.isFocalboardPlugin() && <ChatReturnLink/>}
                     <VersionMessage/>
 
                     {!mobileWarningClosed &&

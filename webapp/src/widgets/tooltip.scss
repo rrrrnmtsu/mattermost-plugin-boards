@@ -107,3 +107,11 @@ $tooltop-vertical-offset: 2px;
         transform: translate(-50%, -#{$tooltop-horizontal-offset});
     }
 }
+
+// Touch browsers must execute the first tap instead of revealing hover-only content.
+@media (hover: none) and (pointer: coarse) {
+    .octo-tooltip:hover::before,
+    .octo-tooltip:hover::after {
+        display: none;
+    }
+}

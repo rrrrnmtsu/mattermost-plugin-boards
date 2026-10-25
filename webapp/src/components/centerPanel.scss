@@ -91,3 +91,40 @@
         }
     }
 }
+
+// Keep the board frame inside the viewport; only the Kanban columns scroll sideways.
+@media screen and (max-width: 768px) {
+    .CenterPanel,
+    .BoardComponent {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .BoardComponent > .top-head {
+        min-width: 0;
+        padding: 8px;
+
+        > .mid-head {
+            margin-top: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .ViewTitle {
+            min-width: 0;
+            flex: 1 1 160px;
+            padding-right: 0;
+        }
+
+        .shareButtonWrapper {
+            margin-left: auto;
+        }
+    }
+
+    .BoardComponent .Button,
+    .BoardComponent .IconButton {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+    }
+}

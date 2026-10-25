@@ -251,3 +251,42 @@
     }
 
 }
+
+@media screen and (max-width: 768px) {
+    .ShareBoardDialog .dialog {
+        width: calc(100vw - 16px);
+        max-width: calc(100vw - 16px);
+        max-height: calc(100dvh - 16px);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .ShareBoardDialog .tabs-container,
+    .ShareBoardDialog .tabs-content {
+        padding: 16px;
+    }
+
+    .ShareBoardDialog .tabs-inputs {
+        flex-wrap: wrap;
+        gap: 8px;
+
+        .input-container {
+            min-width: 0;
+            width: 100%;
+            margin-right: 0;
+        }
+    }
+
+    .ShareBoardDialog input {
+        min-width: 0;
+        max-width: 100%;
+        font-size: 16px;
+    }
+
+    .ShareBoardDialog .Button,
+    .ShareBoardDialog .IconButton {
+        min-width: 44px;
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+}
