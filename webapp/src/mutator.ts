@@ -642,6 +642,23 @@ class Mutator {
         await this.updateBoardCardProperties(boardId, oldCardProperties, newCardProperties, 'rename option')
     }
 
+    // The PostgreSQL batch API commits card properties and view order together.
+    async moveKanbanCard(card: Card, view: BoardView, properties: Card['fields']['properties'], order?: string[]): Promise<void> {
+        if (card.boardId !== view.boardId || card.type !== 'card' || view.type !== 'view') throw new Error('Invalid move scope')
+        const newCard = {...card, fields: {...card.fields, properties}}
+        const newView = {...view, fields: {...view.fields, cardOrder: order || view.fields.cardOrder}}
+        const before: Block[] = [card, ...(order ? [view] : [])]
+        const after: Block[] = [newCard, ...(order ? [newView] : [])]
+        const patches = after.map((block, index) => createPatchesFromBlocks(block, before[index]))
+        const apply = async (forward: boolean) => {
+            const response = await octoClient.patchBoardBlocks(card.boardId, before, patches.map(patch => patch[forward ? 0 : 1]))
+            if (!response.ok) throw new Error(`Card move HTTP ${response.status}`)
+            store.dispatch(updateCards([forward ? newCard : card]))
+            if (order) store.dispatch(updateViews([forward ? newView : view]))
+        }
+        await undoManager.perform(() => apply(true), () => apply(false), 'move card', this.undoGroupId)
+    }
+
     async changePropertyValue(boardId: string, card: Card, propertyId: string, value?: string | string[], description = 'change property') {
         const oldValue = card.fields.properties[propertyId]
 

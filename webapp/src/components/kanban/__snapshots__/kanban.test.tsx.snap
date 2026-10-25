@@ -11,12 +11,17 @@ exports[`src/component/kanban/kanban return kanban and change title on KanbanCol
   <div
     class="Kanban"
   >
+    <span
+      data-kanban-touch-anchor="true"
+      hidden=""
+    />
     <div
       class="octo-board-header"
       id="mainBoardHeader"
     >
       <div
         class="octo-board-header-cell KanbanColumnHeader"
+        data-kanban-column-id="property_value_id_1"
         draggable="true"
         style="opacity: 1;"
       >
@@ -69,6 +74,7 @@ exports[`src/component/kanban/kanban return kanban and change title on KanbanCol
       </div>
       <div
         class="octo-board-header-cell KanbanColumnHeader"
+        data-kanban-column-id="property_value_id_2"
         draggable="true"
         style="opacity: 1;"
       >
@@ -142,9 +148,12 @@ exports[`src/component/kanban/kanban return kanban and change title on KanbanCol
     >
       <div
         class="octo-board-column"
+        data-kanban-column-id="property_value_id_1"
       >
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id1"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -178,6 +187,8 @@ exports[`src/component/kanban/kanban return kanban and change title on KanbanCol
         </div>
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id2"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -219,9 +230,12 @@ exports[`src/component/kanban/kanban return kanban and change title on KanbanCol
       </div>
       <div
         class="octo-board-column"
+        data-kanban-column-id="property_value_id_2"
       >
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id3"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -297,12 +311,17 @@ exports[`src/component/kanban/kanban return kanban and click on KanbanCalculatio
   <div
     class="Kanban"
   >
+    <span
+      data-kanban-touch-anchor="true"
+      hidden=""
+    />
     <div
       class="octo-board-header"
       id="mainBoardHeader"
     >
       <div
         class="octo-board-header-cell KanbanColumnHeader"
+        data-kanban-column-id="property_value_id_1"
         draggable="true"
         style="opacity: 1;"
       >
@@ -516,6 +535,7 @@ exports[`src/component/kanban/kanban return kanban and click on KanbanCalculatio
       </div>
       <div
         class="octo-board-header-cell KanbanColumnHeader"
+        data-kanban-column-id="property_value_id_2"
         draggable="true"
         style="opacity: 1;"
       >
@@ -589,9 +609,12 @@ exports[`src/component/kanban/kanban return kanban and click on KanbanCalculatio
     >
       <div
         class="octo-board-column"
+        data-kanban-column-id="property_value_id_1"
       >
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id1"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -625,6 +648,8 @@ exports[`src/component/kanban/kanban return kanban and click on KanbanCalculatio
         </div>
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id2"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -666,9 +691,12 @@ exports[`src/component/kanban/kanban return kanban and click on KanbanCalculatio
       </div>
       <div
         class="octo-board-column"
+        data-kanban-column-id="property_value_id_2"
       >
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id3"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -744,12 +772,17 @@ exports[`src/component/kanban/kanban should match snapshot 1`] = `
   <div
     class="Kanban"
   >
+    <span
+      data-kanban-touch-anchor="true"
+      hidden=""
+    />
     <div
       class="octo-board-header"
       id="mainBoardHeader"
     >
       <div
         class="octo-board-header-cell KanbanColumnHeader"
+        data-kanban-column-id="property_value_id_1"
         draggable="true"
         style="opacity: 1;"
       >
@@ -802,6 +835,7 @@ exports[`src/component/kanban/kanban should match snapshot 1`] = `
       </div>
       <div
         class="octo-board-header-cell KanbanColumnHeader"
+        data-kanban-column-id="property_value_id_2"
         draggable="true"
         style="opacity: 1;"
       >
@@ -875,9 +909,12 @@ exports[`src/component/kanban/kanban should match snapshot 1`] = `
     >
       <div
         class="octo-board-column"
+        data-kanban-column-id="property_value_id_1"
       >
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id1"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -911,6 +948,8 @@ exports[`src/component/kanban/kanban should match snapshot 1`] = `
         </div>
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id2"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -952,9 +991,12 @@ exports[`src/component/kanban/kanban should match snapshot 1`] = `
       </div>
       <div
         class="octo-board-column"
+        data-kanban-column-id="property_value_id_2"
       >
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id3"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -1030,12 +1072,17 @@ exports[`src/component/kanban/kanban should match snapshot without permissions 1
   <div
     class="Kanban"
   >
+    <span
+      data-kanban-touch-anchor="true"
+      hidden=""
+    />
     <div
       class="octo-board-header"
       id="mainBoardHeader"
     >
       <div
         class="octo-board-header-cell KanbanColumnHeader"
+        data-kanban-column-id="property_value_id_1"
         draggable="false"
         style="opacity: 1;"
       >
@@ -1069,6 +1116,7 @@ exports[`src/component/kanban/kanban should match snapshot without permissions 1
       </div>
       <div
         class="octo-board-header-cell KanbanColumnHeader"
+        data-kanban-column-id="property_value_id_2"
         draggable="false"
         style="opacity: 1;"
       >
@@ -1112,9 +1160,12 @@ exports[`src/component/kanban/kanban should match snapshot without permissions 1
     >
       <div
         class="octo-board-column"
+        data-kanban-column-id="property_value_id_1"
       >
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id1"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -1148,6 +1199,8 @@ exports[`src/component/kanban/kanban should match snapshot without permissions 1
         </div>
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id2"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >
@@ -1182,9 +1235,12 @@ exports[`src/component/kanban/kanban should match snapshot without permissions 1
       </div>
       <div
         class="octo-board-column"
+        data-kanban-column-id="property_value_id_2"
       >
         <div
           class="KanbanCard false"
+          data-kanban-card-id="id3"
+          data-touch-movable="false"
           draggable="true"
           style="opacity: 1;"
         >

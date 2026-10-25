@@ -450,5 +450,12 @@
   "tutorial_tip.seen": "以前に見たことがありますか?",
     "Sakura.back-to-chat": "チャットへ戻る",
   "Sakura.source-code": "ソースコード",
-  "ViewHeader.mobile-settings": "表示設定"
+  "ViewHeader.mobile-settings": "表示設定",
+  "KanbanTouch.saved": "カードを移動しました",
+  "KanbanTouch.failed": "移動を確認できませんでした。カードの状態をご確認ください。",
+  "KanbanTouch.sorted": "列内の順序を変更するには、手動の並び順に切り替えてください。",
+  "KanbanTouch.saving": "移動を保存しています…",
+  "KanbanTouch.moving": "移動中 — {column}",
+  "KanbanTouch.choose": "移動先を選択"
+
 }

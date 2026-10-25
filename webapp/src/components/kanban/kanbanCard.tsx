@@ -8,6 +8,7 @@ import {useIntl} from 'react-intl'
 import {Board, IPropertyTemplate} from '../../blocks/board'
 import {Card} from '../../blocks/card'
 import {useSortable} from '../../hooks/sortable'
+
 import mutator from '../../mutator'
 import TelemetryClient, {TelemetryActions, TelemetryCategory} from '../../telemetry/telemetryClient'
 import {Utils} from '../../utils'
@@ -22,6 +23,8 @@ import CopyLinkTourStep from '../onboardingTour/copyLink/copy_link'
 import CardActionsMenu from '../cardActionsMenu/cardActionsMenu'
 import CardActionsMenuIcon from '../cardActionsMenu/cardActionsMenuIcon'
 import {getValidEmojiData} from '../../utils/emojiUtils'
+
+import {isTouchCardInput} from './kanbanTouch'
 
 export const OnboardingCardClassName = 'onboardingCard'
 
@@ -41,7 +44,7 @@ type Props = {
 const KanbanCard = (props: Props) => {
     const {card, board} = props
     const intl = useIntl()
-    const [isDragging, isOver, cardRef] = useSortable('card', card, !props.readonly, props.onDrop)
+    const [isDragging, isOver, cardRef] = useSortable('card', card, !props.readonly && !isTouchCardInput(), props.onDrop)
     const visiblePropertyTemplates = props.visiblePropertyTemplates || []
     const match = useRouteMatch<{boardId: string, viewId: string, cardId?: string}>()
     let className = props.isSelected ? 'KanbanCard selected' : 'KanbanCard'
@@ -99,7 +102,9 @@ const KanbanCard = (props: Props) => {
             <div
                 ref={props.readonly ? () => null : cardRef}
                 className={`${className} ${showOnboarding && OnboardingCardClassName}`}
-                draggable={!props.readonly}
+                data-kanban-card-id={card.id}
+                data-touch-movable={isTouchCardInput() && !props.readonly && !card.limited}
+                draggable={!props.readonly && !isTouchCardInput()}
                 style={{opacity: isDragging ? 0.5 : 1}}
                 onClick={handleOnClick}
             >

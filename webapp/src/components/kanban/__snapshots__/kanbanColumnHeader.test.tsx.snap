@@ -4,6 +4,7 @@ exports[`src/components/kanban/kanbanColumnHeader return kanbanColumnHeader and 
 <div>
   <div
     class="octo-board-header-cell KanbanColumnHeader"
+    data-kanban-column-id="id1"
     draggable="true"
     style="opacity: 1;"
   >
@@ -349,6 +350,7 @@ exports[`src/components/kanban/kanbanColumnHeader return kanbanColumnHeader and 
 <div>
   <div
     class="octo-board-header-cell KanbanColumnHeader"
+    data-kanban-column-id="id1"
     draggable="true"
     style="opacity: 1;"
   >
@@ -409,6 +411,7 @@ exports[`src/components/kanban/kanbanColumnHeader should match snapshot 1`] = `
 <div>
   <div
     class="octo-board-header-cell KanbanColumnHeader"
+    data-kanban-column-id="id1"
     draggable="true"
     style="opacity: 1;"
   >
@@ -469,6 +472,7 @@ exports[`src/components/kanban/kanbanColumnHeader should match snapshot readonly
 <div>
   <div
     class="octo-board-header-cell KanbanColumnHeader"
+    data-kanban-column-id="id1"
     draggable="true"
     style="opacity: 1;"
   >

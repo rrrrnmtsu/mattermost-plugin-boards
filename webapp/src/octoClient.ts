@@ -360,6 +360,22 @@ class OctoClient {
         }))
     }
 
+    async patchBoardBlocks(boardId: string, blocks: Block[], blockPatches: BlockPatch[]): Promise<Response> {
+        if (!blocks.length || blocks.length !== blockPatches.length || blocks.some(block => block.boardId !== boardId)) {
+            throw new Error('Invalid card move batch')
+        }
+        const controller = new AbortController()
+        const timeout = setTimeout(() => controller.abort(), 15000)
+        try {
+            return await fetch(`${this.getBaseURL()}/api/v2/boards/${boardId}/blocks`, {
+                ...Client4.getOptions({method: 'PATCH', headers: this.headers(), body: JSON.stringify({block_ids: blocks.map(block => block.id), block_patches: blockPatches})}),
+                signal: controller.signal,
+            })
+        } finally {
+            clearTimeout(timeout)
+        }
+    }
+
     async patchBlocks(blocks: Block[], blockPatches: BlockPatch[]): Promise<Response> {
         Utils.log(`patchBlocks: ${blocks.length} blocks`)
         const blockIds = blocks.map((block) => block.id)

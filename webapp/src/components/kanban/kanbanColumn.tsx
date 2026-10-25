@@ -8,6 +8,7 @@ import {Card} from '../../blocks/card'
 import './kanbanColumn.scss'
 
 type Props = {
+    columnId?: string
     onDrop: (card: Card) => void
     children: React.ReactNode
 }
@@ -33,6 +34,7 @@ const KanbanColumn = (props: Props) => {
         <div
             ref={drop}
             className={className}
+            data-kanban-column-id={props.columnId}
         >
             {props.children}
         </div>

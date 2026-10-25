@@ -339,3 +339,68 @@ body.focalboard-body {
     body.focalboard-body .octo-tooltip::before,
     body.focalboard-body .octo-tooltip::after { display: none !important; }
 }
+
+body.focalboard-body {
+    .KanbanCard[data-touch-movable='true'] {
+        -webkit-touch-callout: none;
+        user-select: none;
+    }
+    .KanbanCard[data-touch-dragging='true'] { opacity: 0.3 !important; }
+
+    [data-kanban-column-id][data-touch-drop='true'] {
+        background: rgba(var(--button-bg-rgb), 0.13);
+        outline: 2px solid rgba(var(--button-bg-rgb), 0.65);
+        outline-offset: -2px;
+    }
+
+    .kanban-touch-overlay,
+    .kanban-touch-notice {
+        @include z-index(touch-card-drag);
+        position: fixed;
+        pointer-events: none;
+        color: rgb(var(--center-channel-color-rgb));
+    }
+    .kanban-touch-overlay { inset: 0; }
+
+    .kanban-touch-preview {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 12px;
+        border: 2px solid rgb(var(--button-bg-rgb));
+        border-radius: 8px;
+        background: rgb(var(--center-channel-bg-rgb));
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+        will-change: transform;
+
+        strong { display: block;
+            max-height: 54px;
+            overflow: hidden;
+            overflow-wrap: anywhere; }
+
+        span { display: block;
+            margin-top: 6px;
+            font-size: 13px; }
+    }
+
+    .kanban-touch-insertion {
+        position: fixed;
+        height: 4px;
+        border-radius: 2px;
+        background: rgb(var(--button-bg-rgb));
+    }
+
+    .kanban-touch-notice {
+        left: 16px;
+        right: 16px;
+        bottom: max(20px, env(safe-area-inset-bottom));
+        width: fit-content;
+        max-width: 560px;
+        margin: 0 auto;
+        padding: 12px 16px;
+        border-radius: 8px;
+        background: rgb(var(--center-channel-bg-rgb));
+        box-shadow: 0 3px 18px rgba(0, 0, 0, 0.4);
+        &.failed { border: 1px solid var(--error-text); }
+    }
+}

@@ -29,6 +29,8 @@ import KanbanColumn from './kanbanColumn'
 import KanbanColumnHeader from './kanbanColumnHeader'
 import KanbanHiddenColumnItem from './kanbanHiddenColumnItem'
 
+import KanbanTouchDrag from './kanbanTouchDrag'
+
 import './kanban.scss'
 
 type Props = {
@@ -223,6 +225,7 @@ const Kanban = (props: Props) => {
             horizontalStrength={hStrength}
             verticalStrength={vStrength}
         >
+            <KanbanTouchDrag {...props}/>
             <div
                 className='octo-board-header'
                 id='mainBoardHeader'
@@ -285,6 +288,7 @@ const Kanban = (props: Props) => {
                 {visibleGroups.map((group) => (
                     <KanbanColumn
                         key={group.option.id || 'empty'}
+                        columnId={group.option.id || ''}
                         onDrop={(card: Card) => onDropToColumn(group.option, card)}
                     >
                         {group.cards.map((card) => (
