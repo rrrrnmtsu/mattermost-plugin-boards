@@ -5,6 +5,9 @@ import React from 'react'
 
 import {Placement} from 'tippy.js'
 
+import {Utils} from '../../../utils'
+
+
 import {ClientConfig} from '../../../config/clientConfig'
 import {getClientConfig} from '../../../store/clientConfig'
 
@@ -47,7 +50,9 @@ const TourTipRenderer = (props: Props): JSX.Element | null => {
         isOnboardingBoard = true
     }
 
-    const showTour = !disableTour && isOnboardingBoard && onboardingTourStarted && onboardingTourCategory === props.category
+    // Anchored desktop tips must not cover touch controls; stored progress is retained.
+    const touchLayout = Utils.isMobile() || Boolean(window.matchMedia?.('(pointer: coarse)').matches)
+    const showTour = !touchLayout && !disableTour && isOnboardingBoard && onboardingTourStarted && onboardingTourCategory === props.category
     let showTourTip = showTour && onboardingTourStep === props.step.toString()
 
     if (props.requireCard) {

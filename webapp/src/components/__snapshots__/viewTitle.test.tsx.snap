@@ -40,6 +40,13 @@ exports[`components/viewTitle add random icon 1`] = `
         value="board title"
       />
     </div>
+    <button
+      aria-expanded="false"
+      class="Button mobile-description-toggle"
+      type="button"
+    >
+      Show description
+    </button>
   </div>
 </div>
 `;
@@ -91,6 +98,13 @@ exports[`components/viewTitle hide description 1`] = `
         value="board title"
       />
     </div>
+    <button
+      aria-expanded="false"
+      class="Button mobile-description-toggle"
+      type="button"
+    >
+      Show description
+    </button>
   </div>
 </div>
 `;
@@ -142,8 +156,16 @@ exports[`components/viewTitle should match snapshot 1`] = `
         value="board title"
       />
     </div>
+    <button
+      aria-expanded="false"
+      class="Button mobile-description-toggle"
+      type="button"
+    >
+      Show description
+    </button>
     <div
       class="description"
+      data-board-visible="true"
     >
       <div
         class="MarkdownEditor octo-editor  "
@@ -195,8 +217,16 @@ exports[`components/viewTitle should match snapshot readonly 1`] = `
         value="board title"
       />
     </div>
+    <button
+      aria-expanded="false"
+      class="Button mobile-description-toggle"
+      type="button"
+    >
+      Show description
+    </button>
     <div
       class="description"
+      data-board-visible="true"
     >
       <div
         class="MarkdownEditor octo-editor  "
@@ -264,8 +294,16 @@ exports[`components/viewTitle show description 1`] = `
         value="board title"
       />
     </div>
+    <button
+      aria-expanded="false"
+      class="Button mobile-description-toggle"
+      type="button"
+    >
+      Show description
+    </button>
     <div
       class="description"
+      data-board-visible="true"
     >
       <div
         class="MarkdownEditor octo-editor  "

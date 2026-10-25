@@ -62,6 +62,7 @@ type Props = {
 
 const ViewHeader = (props: Props) => {
     const [showFilter, setShowFilter] = useState(false)
+    const [mobileSettingsOpen, setMobileSettingsOpen] = useState(false)
     const [lockFilterOnClose, setLockFilterOnClose] = useState(false)
     const intl = useIntl()
     const canEditBoardProperties = useHasCurrentBoardPermissions([Permission.ManageBoardProperties])
@@ -115,7 +116,7 @@ const ViewHeader = (props: Props) => {
     const showAddViewTourStep = showTourBaseCondition && delayComplete
 
     return (
-        <div className='ViewHeader'>
+        <div className={'ViewHeader' + (mobileSettingsOpen ? ' mobile-settings-open' : '')}>
             <div className='viewSelector'>
                 <Editable
                     value={viewTitle}
@@ -149,8 +150,17 @@ const ViewHeader = (props: Props) => {
 
             <div className='octo-spacer'/>
 
+            {!props.readonly && canEditBoardProperties && <button
+                type='button'
+                className='Button mobile-settings-toggle'
+                aria-expanded={mobileSettingsOpen}
+                onClick={() => setMobileSettingsOpen(!mobileSettingsOpen)}
+            >
+                <FormattedMessage id='ViewHeader.mobile-settings' defaultMessage='View settings'/>
+            </button>}
+
             {!props.readonly && canEditBoardProperties &&
-            <>
+            <div className='view-settings'>
                 {/* Card properties */}
 
                 <ViewHeaderPropertiesMenu
@@ -211,7 +221,7 @@ const ViewHeader = (props: Props) => {
                     orderedCards={cards}
                 />
                 }
-            </>
+            </div>
             }
 
             {/* Search */}

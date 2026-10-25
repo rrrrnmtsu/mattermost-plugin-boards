@@ -26,6 +26,7 @@ const ViewTitle = (props: Props) => {
     const {board} = props
 
     const [title, setTitle] = useState(board.title)
+    const [mobileDescriptionExpanded, setMobileDescriptionExpanded] = useState(false)
     const onEditTitleSave = useCallback(() => mutator.changeBoardTitle(board.id, board.title, title), [board.id, board.title, title])
     const onEditTitleCancel = useCallback(() => setTitle(board.title), [board.title])
     const onDescriptionBlur = useCallback((text) => mutator.changeBoardDescription(board.id, board.id, board.description, text), [board.id, board.description])
@@ -42,7 +43,7 @@ const ViewTitle = (props: Props) => {
     const intl = useIntl()
 
     return (
-        <div className='ViewTitle'>
+        <div className={'ViewTitle' + (mobileDescriptionExpanded ? ' mobile-description-expanded' : '')}>
             <div className='add-buttons add-visible'>
                 {!readonly && !board.icon &&
                     <Button
@@ -112,8 +113,18 @@ const ViewTitle = (props: Props) => {
                 />
             </div>
 
-            {board.showDescription &&
-                <div className='description'>
+            {(!readonly || board.description) &&
+                <button
+                    type='button'
+                    className='Button mobile-description-toggle'
+                    aria-expanded={mobileDescriptionExpanded}
+                    onClick={() => setMobileDescriptionExpanded(!mobileDescriptionExpanded)}
+                >
+                    {intl.formatMessage({id: mobileDescriptionExpanded ? 'ViewTitle.hide-description' : 'ViewTitle.show-description', defaultMessage: mobileDescriptionExpanded ? 'Hide description' : 'Show description'})}
+                </button>}
+
+            {(board.showDescription || mobileDescriptionExpanded) &&
+                <div className='description' data-board-visible={Boolean(board.showDescription)}>
                     <MarkdownEditor
                         text={board.description}
                         placeholderText='Add a description...'

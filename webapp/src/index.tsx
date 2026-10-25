@@ -51,6 +51,7 @@ import {PluginRegistry} from './types/mattermost-webapp'
 import './plugin.scss'
 import CloudUpgradeNudge from "./components/cloudUpgradeNudge/cloudUpgradeNudge"
 import CreateBoardFromTemplate from './components/createBoardFromTemplate'
+import './styles/mobile.scss'
 
 const windowAny = (window as SuiteWindow)
 windowAny.baseURL = process.env.TARGET_IS_PRODUCT ? '/plugins/boards' : '/plugins/focalboard'

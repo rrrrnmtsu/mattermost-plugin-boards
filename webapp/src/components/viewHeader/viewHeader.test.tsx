@@ -3,7 +3,7 @@
 
 
 import React from 'react'
-import {render} from '@testing-library/react'
+import {render, fireEvent} from '@testing-library/react'
 import {Provider as ReduxProvider} from 'react-redux'
 
 import '@testing-library/jest-dom'
@@ -74,6 +74,15 @@ describe('components/viewHeader/viewHeader', () => {
         },
     }
     const store = mockStateStore([], state)
+    test('mobile view controls expand locally with an accessible toggle', () => {
+        const {container} = render(wrapIntl(<ReduxProvider store={store}><ViewHeader board={board} activeView={activeView} views={[activeView]} cards={[card]} groupByProperty={board.cardProperties[0]} addCard={jest.fn()} addCardFromTemplate={jest.fn()} addCardTemplate={jest.fn()} editCardTemplate={jest.fn()} readonly={false}/></ReduxProvider>))
+        const toggle = container.querySelector('.mobile-settings-toggle') as HTMLButtonElement
+        expect(toggle.getAttribute('aria-expanded')).toBe('false')
+        fireEvent.click(toggle)
+        expect(toggle.getAttribute('aria-expanded')).toBe('true')
+        expect(container.querySelector('.ViewHeader')).toHaveClass('mobile-settings-open')
+    })
+
     test('return viewHeader', () => {
         const {container} = render(
             wrapIntl(

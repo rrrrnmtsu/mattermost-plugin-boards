@@ -64,6 +64,17 @@ describe('components/viewTitle', () => {
         jest.clearAllMocks()
     })
 
+    test('mobile description expansion changes local presentation without saving shared board settings', async () => {
+        const {container} = render(wrapIntl(<ReduxProvider store={store}><ViewTitle board={board} readonly={false}/></ReduxProvider>))
+        const toggle = container.querySelector('.mobile-description-toggle') as HTMLButtonElement
+        expect(toggle.getAttribute('aria-expanded')).toBe('false')
+        fireEvent.click(toggle)
+        expect(toggle.getAttribute('aria-expanded')).toBe('true')
+        expect(container.querySelector('.ViewTitle')).toHaveClass('mobile-description-expanded')
+        expect(mockedMutator.showBoardDescription).not.toHaveBeenCalled()
+        expect(mockedMutator.changeBoardDescription).not.toHaveBeenCalled()
+    })
+
     test('should match snapshot', async () => {
         let container
         await act(async () => {

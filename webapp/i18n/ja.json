@@ -449,5 +449,6 @@
   "tutorial_tip.out": "これらのコツを表示しません。",
   "tutorial_tip.seen": "以前に見たことがありますか?",
     "Sakura.back-to-chat": "チャットへ戻る",
-  "Sakura.source-code": "ソースコード"
+  "Sakura.source-code": "ソースコード",
+  "ViewHeader.mobile-settings": "表示設定"
 }
