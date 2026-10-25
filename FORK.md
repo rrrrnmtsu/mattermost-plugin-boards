@@ -31,3 +31,7 @@ A localized Boards main-menu action opens the current team with a native same-or
 New empty/template boards are revealed after the channel-link save completes, preventing immediate title edits from racing that save. Subsequent undo/redo navigation is preserved. A delayed-link regression test verifies this order.
 
 Column-property saves apply the successful REST response to the local store, including undo/redo, so first edits do not depend on a WebSocket subscription already being ready. Failed or mismatched responses are rejected. Older board WebSocket updates cannot overwrite newer acknowledged state.
+
+Enter/Escape suppresses the corresponding blur save until that blur event is consumed. This also covers WebKit deferred blur delivery and avoids a duplicate title-save request during the next navigation.
+
+Card title saves also deduplicate an acknowledged/in-flight title across Enter, blur and dialog cleanup. Failed saves clear the marker and rethrow, allowing a later retry without hiding the error.

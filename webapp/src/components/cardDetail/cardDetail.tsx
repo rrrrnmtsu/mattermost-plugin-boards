@@ -105,9 +105,18 @@ const CardDetail = (props: Props): JSX.Element|null => {
     const [title, setTitle] = useState(card.title)
     const [serverTitle, setServerTitle] = useState(card.title)
     const titleRef = useRef<Focusable>(null)
-    const saveTitle = useCallback(() => {
-        if (title !== card.title) {
-            mutator.changeBlockTitle(props.board.id, card.id, card.title, title)
+    const submittedTitle = useRef<string|null>(null)
+    const saveTitle = useCallback(async () => {
+        if (title !== card.title && submittedTitle.current !== title) {
+            submittedTitle.current = title
+            try {
+                await mutator.changeBlockTitle(props.board.id, card.id, card.title, title)
+            } catch (error) {
+                if (submittedTitle.current === title) {
+                    submittedTitle.current = null
+                }
+                throw error
+            }
         }
     }, [card.title, title])
     const canEditBoardCards = useHasCurrentBoardPermissions([Permission.ManageBoardCards])

@@ -79,7 +79,6 @@ export function useEditable(
     const blur = (): void => {
         saveOnBlur.current = false
         elementRef.current?.blur()
-        saveOnBlur.current = true
     }
 
     const {value, onChange, className, placeholderText, readonly} = props
@@ -95,7 +94,10 @@ export function useEditable(
         },
         value,
         title: value,
-        onBlur: () => save('onBlur'),
+        onBlur: () => {
+            save('onBlur')
+            saveOnBlur.current = true
+        },
         onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement|HTMLInputElement>): void => {
             if (e.nativeEvent.isComposing || e.keyCode === 229) {
                 return

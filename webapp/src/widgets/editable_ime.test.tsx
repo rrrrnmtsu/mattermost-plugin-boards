@@ -31,3 +31,20 @@ describe('Japanese IME edit confirmation', () => {
         expect(cancel).toHaveBeenCalledTimes(1)
     })
 })
+
+
+test('Enter suppresses the following deferred blur save and permits the next edit', () => {
+    const onSave = jest.fn()
+    const {getByRole} = render(<Editable value='Edited title' onChange={jest.fn()} onSave={onSave}/>)
+    const input = getByRole('textbox') as HTMLInputElement
+    input.focus()
+    const blur = jest.spyOn(input, 'blur').mockImplementation(() => undefined)
+    fireEvent.keyDown(input, {key: 'Enter', keyCode: 13})
+    expect(onSave).toHaveBeenCalledTimes(1)
+    fireEvent.blur(input)
+    expect(onSave).toHaveBeenCalledTimes(1)
+    fireEvent.focus(input)
+    fireEvent.blur(input)
+    expect(onSave).toHaveBeenCalledTimes(2)
+    blur.mockRestore()
+})
