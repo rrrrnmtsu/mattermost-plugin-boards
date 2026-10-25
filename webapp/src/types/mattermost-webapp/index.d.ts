@@ -8,6 +8,7 @@ import React from 'react'
 import {Channel, ChannelMembership} from '@mattermost/types/channels'
 
 export interface PluginRegistry {
+    registerMainMenuAction?(text: string, action: () => void): string
     registerPostTypeComponent(typeName: string, component: React.ElementType)
     registerChannelHeaderButtonAction(icon: React.Element, action: () => void, dropdownText: string, tooltipText: string)
     registerChannelIntroButtonAction(icon: React.Element, action: () => void, tooltipText: string)

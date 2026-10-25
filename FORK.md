@@ -25,3 +25,5 @@ Bundle only linux-amd64 and preserve assets, LICENSE.txt, NOTICE.txt and the gen
 Editable card/board titles ignore Enter/Escape while Japanese IME composition is active (including keyCode 229). Focused tests cover retaining focus and submitting the following Enter exactly once.
 
 The chat navigation is rendered after the existing version/mobile notices, preserving the original banner stacking and keeping the return link clickable.
+
+A localized Boards main-menu action opens the current team with a native same-origin navigation, so touch users do not need to type a URL or find the desktop app bar. It is unregistered with the plugin.

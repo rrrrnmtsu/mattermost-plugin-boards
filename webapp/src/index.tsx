@@ -164,6 +164,7 @@ const HeaderComponent = () => {
 
 export default class Plugin {
     channelHeaderButtonId?: string
+    mainMenuActionId?: string
     rhsId?: string
     boardSelectorId?: string
     registry?: PluginRegistry
@@ -285,6 +286,15 @@ export default class Plugin {
             }
         })
 
+        if (registry.registerMainMenuAction) {
+            const currentUser = mmStore.getState().entities.users.profiles[mmStore.getState().entities.users.currentUserId]
+            const locale = currentUser?.locale || navigator.language
+            this.mainMenuActionId = registry.registerMainMenuAction(locale.startsWith('ja') ? 'ボード' : 'Boards', () => {
+                const teamId = mmStore.getState().entities.teams.currentTeamId
+                window.location.assign(subpath + '/boards' + (teamId ? '/team/' + encodeURIComponent(teamId) : ''))
+            })
+        }
+
         if (this.registry.registerProduct) {
             windowAny.frontendBaseURL = subpath + '/boards'
 
@@ -392,6 +402,9 @@ export default class Plugin {
     }
 
     uninitialize(): void {
+        if (this.mainMenuActionId) {
+            this.registry?.unregisterComponent(this.mainMenuActionId)
+        }
         if (this.channelHeaderButtonId) {
             this.registry?.unregisterComponent(this.channelHeaderButtonId)
         }
