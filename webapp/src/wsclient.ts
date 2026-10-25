@@ -377,6 +377,12 @@ class WSClient {
             this.client.addCloseListener(onClose)
             this.client.addReconnectListener(onReconnect)
 
+            // The core connection may have opened before these listeners were
+            // attached. Flush subscriptions recorded by child views in that case.
+            if (this.client.conn?.readyState === WebSocket.OPEN) {
+                onConnect()
+            }
+
             return
         }
 

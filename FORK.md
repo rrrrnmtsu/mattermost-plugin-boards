@@ -36,4 +36,6 @@ Enter/Escape suppresses the corresponding blur save until that blur event is con
 
 Card title saves also deduplicate an acknowledged/in-flight title across Enter, blur and dialog cleanup. Failed saves clear the marker and rethrow, allowing a later retry without hiding the error.
 
-Register the missing UPDATE_BLOCK plugin WebSocket handler, matching its existing import and unregistration. Card property/title changes and collaborator edits now update the open view without a reload.
+Register UPDATE_BLOCK explicitly for event compatibility, alongside the existing UPDATE_BOARD payload handling. The current server also carries block updates inside UPDATE_BOARD events.
+
+When the shared core WebSocket is already open at Boards initialization, flush pending team subscriptions immediately. Child effects can subscribe before the core client is attached; waiting only for a future first-connect event previously lost that subscription. Tests cover preconnected, connecting and reconnecting clients.
