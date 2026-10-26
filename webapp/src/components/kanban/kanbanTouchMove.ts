@@ -7,6 +7,9 @@ import {BoardView} from '../../blocks/boardView'
 
 import {TouchDestination} from './kanbanTouch'
 
+// Computed people fields cannot be changed by moving a card.
+export const canTouchMoveGroup = (type?: string) => type === 'select' || type === 'person'
+
 export function planTouchMove(cardId: string, target: TouchDestination, cards: Card[], groups: BoardGroup[], view: BoardView, propertyId: string) {
     const card = cards.find(value => value.id === cardId && !value.deleteAt && !value.limited)
     const group = groups.find(value => (value.option.id || '') === target.columnId)

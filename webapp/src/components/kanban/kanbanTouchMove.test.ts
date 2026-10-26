@@ -1,4 +1,4 @@
-import {planTouchMove} from './kanbanTouchMove'
+import {canTouchMoveGroup, planTouchMove} from './kanbanTouchMove'
 import {TestBlockFactory} from '../../test/testBlockFactory'
 
 const board = TestBlockFactory.createBoard()
@@ -38,4 +38,12 @@ test('automatic sorting is kept and same-column reorder is explicitly rejected',
 test('stale cards and cross-column target mismatches are rejected', () => {
     expect(() => planTouchMove('missing', {columnId: 'todo', beforeId: null}, cards, groups, view, 'status')).toThrow()
     expect(() => planTouchMove('a', {columnId: 'doing', beforeId: 'b'}, cards, groups, view, 'status')).toThrow('stale-target')
+})
+
+test('touch moves require a writable grouping property', () => {
+    expect(canTouchMoveGroup('select')).toBe(true)
+    expect(canTouchMoveGroup('person')).toBe(true)
+    expect(canTouchMoveGroup('createdBy')).toBe(false)
+    expect(canTouchMoveGroup('updatedBy')).toBe(false)
+    expect(canTouchMoveGroup()).toBe(false)
 })

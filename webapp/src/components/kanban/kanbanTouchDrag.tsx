@@ -13,7 +13,7 @@ import {useHasCurrentBoardPermissions} from '../../hooks/permissions'
 import mutator from '../../mutator'
 
 import {installKanbanTouch, isTouchCardInput, TouchDragFrame} from './kanbanTouch'
-import {planTouchMove} from './kanbanTouchMove'
+import {canTouchMoveGroup, planTouchMove} from './kanbanTouchMove'
 
 type Props = {board: Board, activeView: BoardView, cards: Card[], visibleGroups: BoardGroup[], groupByProperty?: IPropertyTemplate, readonly: boolean, intl: IntlShape}
 
@@ -24,7 +24,7 @@ export default function KanbanTouchDrag(props: Props): JSX.Element {
     const [frame, setFrame] = useState<TouchDragFrame | null>(null)
     const [notice, setNotice] = useState<'saved' | 'failed' | 'sorted' | null>(null)
     const canEdit = useHasCurrentBoardPermissions([Permission.ManageBoardCards])
-    const enabled = isTouchCardInput() && canEdit && !props.readonly && Boolean(props.groupByProperty)
+    const enabled = isTouchCardInput() && canEdit && !props.readonly && canTouchMoveGroup(props.groupByProperty?.type)
     const scope = props.board.id + ':' + props.activeView.id + ':' + props.groupByProperty?.id
 
     useEffect(() => {
